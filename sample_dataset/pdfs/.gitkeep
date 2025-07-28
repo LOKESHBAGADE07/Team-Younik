@@ -1,0 +1,5 @@
+# Sample PDF Directory
+
+Place your test PDF files in this directory for testing the solution.
+
+The Docker container will read from this directory when mounted as `/app/input`.

@@ -1,0 +1,5 @@
+# Sample Output Directory
+
+Generated JSON files will be placed in this directory.
+
+The Docker container will write to this directory when mounted as `/app/output`.

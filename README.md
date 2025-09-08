@@ -1,83 +1,68 @@
-# PDF Processing Solution - Adobe India Hackathon 2025
+📄 PDF Analyzer - Web Edition
+A modern, browser-based PDF analysis tool inspired by Challenge 1a of the Adobe India Hackathon 2025. This solution has been re-imagined as a fully client-side web application, meaning no files are ever uploaded to a server. All processing happens securely and instantly in your browser.
 
-## Overview
+The application allows users to drag and drop PDF files to extract comprehensive JSON data, including document metadata, content analysis, and structured text.
 
-This is a production-ready PDF processing solution for Challenge 1a of the Adobe India Hackathon 2025. The solution extracts structured data from PDF documents and outputs comprehensive JSON files containing document metadata, content analysis, and extracted data.
+✨ Features
+Entirely Client-Side: Maximum privacy and security. Your files are never sent over the network.
 
-## Features
+Modern User Interface: A clean, responsive interface with a beautiful dark mode.
 
-### Core Functionality
-- **Automatic PDF Discovery**: Processes all PDF files from the input directory
-- **Metadata Extraction**: Extracts document properties, creation dates, author information
-- **Content Analysis**: Analyzes document structure, word counts, and content distribution
-- **Table Detection**: Identifies and extracts tabular data from PDF pages
-- **Heading Recognition**: Detects potential headings using multiple pattern matching strategies
-- **Image Detection**: Identifies pages containing images
-- **Keyword Extraction**: Analyzes content to identify key themes and topics
+Drag & Drop Upload: Easily add multiple PDF files at once with a user-friendly drag-and-drop zone.
 
-### Technical Features
-- **Memory Efficient**: Optimized for large PDFs with controlled memory usage
-- **Concurrent Processing**: Multi-threaded processing for improved performance
-- **Error Handling**: Robust error handling with detailed logging
-- **Structured Output**: Well-organized JSON output with clear hierarchy
-- **Performance Monitoring**: Built-in timing and performance metrics
+Instant Processing: Leverages the power of the browser for fast analysis without server-side delays.
 
-## Architecture
+Comprehensive Analysis:
 
-### Libraries Used
-- **pdfplumber (0.10.3)**: Primary PDF processing library for text and table extraction
-- **PyPDF2 (3.0.1)**: Metadata extraction and document information
-- **concurrent.futures**: Multi-threaded processing for performance optimization
-- **pathlib**: Modern file path handling
-- **logging**: Comprehensive logging system
+Metadata Extraction: Extracts title, author, subject, creation dates, and file properties.
 
-### Design Decisions
+Content Analysis: Calculates word counts, identifies pages with images, and analyzes content distribution.
 
-1. **Dual Library Approach**: Uses both pdfplumber and PyPDF2 to leverage the strengths of each
-   - pdfplumber: Superior text and table extraction
-   - PyPDF2: Reliable metadata extraction
+Heading Recognition: Detects potential headings using pattern matching.
 
-2. **Memory Management**: Implements several memory optimization strategies:
-   - Limits text extraction per page (5000 chars)
-   - Restricts table data (10 rows max)
-   - Limits full document text (10000 chars)
-   - Controls heading extraction (20 max)
+Keyword Extraction: Identifies key themes and topics from the document's content.
 
-3. **Performance Optimization**:
-   - Concurrent processing with controlled thread pool
-   - Page limit (50 pages) for very large documents
-   - Efficient text processing algorithms
+Structured JSON Output: View the well-organized JSON output directly in a dedicated tab for easy inspection or copying.
 
-## Docker Configuration
+🚀 Technology Stack
+This project has transitioned from a Python/Docker backend to a lightweight, high-performance front-end solution.
 
-### Build Command
-```bash
-docker build --platform linux/amd64 -t pdf-processor .
-```
+Core Library: PDF.js (by Mozilla)
 
-### Run Command
-```bash
-docker run --rm -v $(pwd)/input:/app/input:ro -v $(pwd)/output:/app/output --network none pdf-processor
-```
+The world's most popular web-based PDF rendering and parsing engine. It provides robust, safe, and reliable PDF processing directly in the browser, eliminating the need for server-side dependencies like pdfplumber or PyPDF2.
 
-## Output Format
+HTML5: For the core structure and semantics of the application.
 
-### JSON Structure
-Each processed PDF generates a JSON file with the following structure:
+CSS3: For all styling, including the responsive layout, animations, and the light/dark theme switcher.
 
-```json
+Vanilla JavaScript (ES6+): For all application logic, including file handling, DOM manipulation, and orchestrating the analysis with PDF.js. No heavy frameworks are used, ensuring the application is fast and lightweight.
+
+💻 How to Use
+Running this web application is incredibly simple. No builds, no dependencies, no Docker.
+
+Clone the Repository:
+
+git clone [https://github.com/your-username/your-repository.git](https://github.com/your-username/your-repository.git)
+
+Open the HTML File:
+Navigate into the cloned folder and open the index.html file in any modern web browser (like Chrome, Firefox, or Edge).
+
+cd your-repository
+# Double-click index.html in your file explorer
+
+Analyze your PDFs:
+Drag and drop your PDF files onto the upload area or click to select them using the file picker. The results will appear instantly.
+
+📊 Output Format
+The generated JSON structure remains comprehensive and is now created dynamically by the JavaScript in your browser.
+
 {
   "document_info": {
     "filename": "document.pdf",
-    "processing_timestamp": "2025-01-15 10:30:45",
+    "processing_timestamp": "2025-09-08T08:15:00.123Z",
     "metadata": {
       "title": "Document Title",
       "author": "Author Name",
-      "subject": "Document Subject",
-      "creator": "Creator Application",
-      "producer": "PDF Producer",
-      "creation_date": "Creation Date",
-      "modification_date": "Last Modified",
       "page_count": 25,
       "file_size_bytes": 1048576
     }
@@ -85,128 +70,44 @@ Each processed PDF generates a JSON file with the following structure:
   "content_analysis": {
     "structure": {
       "total_words": 5000,
-      "total_tables": 3,
-      "total_headings": 15,
       "pages_with_images": 5,
+      "total_headings": 15,
       "keywords": [
-        {"word": "technology", "frequency": 45},
-        {"word": "solution", "frequency": 32}
-      ],
-      "average_words_per_page": 200
+        {"word": "technology", "frequency": 45}
+      ]
     },
     "pages": [
       {
         "page_number": 1,
         "word_count": 250,
         "has_images": true,
-        "table_count": 1,
         "heading_count": 2,
         "preview_text": "First 200 characters of page content..."
       }
     ]
   },
   "extracted_data": {
-    "tables": [
-      {
-        "table_id": 1,
-        "rows": 5,
-        "columns": 3,
-        "data": [["Header1", "Header2", "Header3"], ["Data1", "Data2", "Data3"]]
-      }
-    ],
     "headings": [
-      {
-        "text": "CHAPTER 1: INTRODUCTION",
-        "type": "uppercase",
-        "line_number": 15
-      }
+      {"text": "CHAPTER 1: INTRODUCTION", "type": "uppercase"}
     ],
     "full_text": "Complete extracted text (first 10000 characters)..."
   }
 }
-```
 
-## Performance Specifications
+💡 Key Design Decisions
+Privacy First: Shifting to a 100% client-side model was a deliberate choice to guarantee user privacy. This is a significant advantage over solutions that require file uploads.
 
-### Compliance with Challenge Requirements
-- ✅ **Execution Time**: Optimized for ≤10 seconds per 50-page PDF
-- ✅ **Model Size**: No ML models used, only lightweight text processing
-- ✅ **Network Access**: No internet connectivity required during execution
-- ✅ **CPU Architecture**: Fully compatible with AMD64 architecture
-- ✅ **Memory Usage**: Designed to stay well within 16GB RAM limit
-- ✅ **Open Source**: All dependencies are open source libraries
+Zero Dependencies: By using Vanilla JavaScript and a CDN-hosted library, there is no need for npm install or complex build steps. This makes the project universally accessible.
 
-### Performance Optimizations
-- Multi-threaded processing for multiple PDFs
-- Memory-efficient streaming processing
-- Intelligent content limiting to prevent memory issues
-- Optimized regex patterns for heading detection
-- Efficient table extraction algorithms
+User Experience: Significant effort was invested in creating a clean, intuitive, and aesthetically pleasing interface, including features like dark mode and smooth animations, to make the tool a pleasure to use.
 
-## Testing
+🔮 Future Enhancements
+While the current version is fully functional, here are some potential improvements:
 
-### Local Testing
-```bash
-# Build the image
-docker build --platform linux/amd64 -t pdf-processor .
+Export to File: Add a button to download the generated JSON data as a .json file.
 
-# Test with sample data
-mkdir -p input output
-cp your_pdfs/*.pdf input/
-docker run --rm -v $(pwd)/input:/app/input:ro -v $(pwd)/output:/app/output --network none pdf-processor
-```
+Data Visualization: Use a library like Chart.js to create charts based on the content analysis (e.g., words per page).
 
-### Performance Testing
-The solution has been tested with:
-- Simple text-only PDFs
-- Complex multi-column layouts
-- Documents with tables and images
-- Large documents (50+ pages)
-- Various PDF formats and creators
+OCR for Scanned PDFs: Integrate a client-side OCR library (like Tesseract.js) to handle image-based PDFs.
 
-## Error Handling
-
-The solution includes comprehensive error handling:
-- Invalid PDF file handling
-- Memory limit protection
-- Corrupted document recovery
-- Network isolation compliance
-- Detailed logging for debugging
-
-## Logging
-
-The application provides detailed logging including:
-- Processing start/completion times
-- Individual file processing status
-- Error details with context
-- Performance metrics
-- Memory usage indicators
-
-## Scalability
-
-The solution is designed to handle:
-- Multiple PDF files simultaneously
-- Large document collections
-- Various PDF formats and structures
-- Different content types (text, tables, images)
-
-## Future Enhancements
-
-Potential improvements for production use:
-- OCR integration for scanned documents
-- Advanced NLP for content categorization
-- Machine learning models for document classification
-- Enhanced table structure recognition
-- Image content analysis
-
-## Support
-
-For questions or issues related to this solution:
-1. Check the detailed logging output
-2. Verify input directory permissions
-3. Ensure Docker platform compatibility
-4. Review memory and performance constraints
-
----
-
-*This solution is optimized for the Adobe India Hackathon 2025 Challenge 1a requirements and demonstrates production-ready PDF processing capabilities within the specified constraints.*
+Advanced Search: Implement a search functionality to find keywords within the full extracted text.

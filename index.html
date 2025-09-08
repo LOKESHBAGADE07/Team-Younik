@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced PDF Analyzer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>
+        // Set the worker source for pdf.js to run in the background
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js`;
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📄 Advanced PDF Analyzer</h1>
+            <div class="theme-switcher" id="theme-switcher" title="Toggle theme">
+                <div class="theme-switcher-icon" id="sun-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 11H4V13H1V11ZM20 11H23V13H20V11ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472Z"></path></svg>
+                </div>
+                <div class="theme-switcher-icon" id="moon-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.3807 2.01924C12.2132 1.94428 13.0513 2.12683 13.759 2.53772C17.4831 4.78638 18.1759 9.81434 15.2335 13.4011C12.2911 17.0226 7.03901 17.4439 3.38955 14.502L3.38935 14.5018C2.99967 13.783 2.85959 12.9692 2.99343 12.1697C3.12727 11.3701 3.52553 10.6459 4.11939 10.0899C4.71325 9.53388 5.46914 9.16813 6.26738 9.04278C8.07954 8.75338 9.87268 9.22731 11.1613 10.3203C12.4499 11.4133 13.1113 13.0076 13.0039 14.6369C12.8965 16.2662 12.0366 17.741 10.6621 18.6631C9.28751 19.5852 7.55034 19.8519 5.92395 19.3828C5.52488 19.2484 5.25579 18.8312 5.39023 18.4321C5.52468 18.0331 5.94186 17.764 6.34093 17.8984C7.63397 18.2676 9.02984 18.0669 10.1228 17.3514C11.2158 16.6358 11.8863 15.4883 12.0163 14.243C12.1463 13.0324 11.6661 11.8351 10.7416 11.0252C9.81711 10.2153 8.55735 9.88937 7.33089 10.1558C6.88372 10.2523 6.40147 10.123 6.03369 9.80369C5.66591 9.48438 5.45427 9.00816 5.45427 8.51332C5.45427 8.01848 5.66591 7.54226 6.03369 7.22295C7.32235 6.12999 9.11549 5.65606 10.9276 5.94545C11.1963 5.98686 11.4723 5.99997 11.75 5.98464C11.1083 4.95332 10.8354 3.79344 11.0028 2.65832L11.0113 2.6053C11.0531 2.34444 11.2037 2.1152 11.4285 1.97966L11.3807 2.01924Z"></path></svg>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="upload-container">
+                <input type="file" id="pdf-upload" multiple accept=".pdf" hidden>
+                <label for="pdf-upload" id="upload-label">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.0007 10.8284L15.5363 7.29289L16.9506 8.70711L12.0007 13.6571L7.05078 8.70711L8.46502 7.29289L12.0007 10.8284ZM12.0007 16.8284L15.5363 13.2929L16.9506 14.7071L12.0007 19.6571L7.05078 14.7071L8.46502 13.2929L12.0007 16.8284ZM4.00069 2H20.0007C21.1052 2 22.0007 2.89543 22.0007 4V20C22.0007 21.1046 21.1052 22 20.0007 22H4.00069C2.89612 22 2.00069 21.1046 2.00069 20V4C2.00069 2.89543 2.89612 2 4.00069 2Z"></path></svg>
+                    <strong>Drag & Drop PDF Files Here</strong>
+                    <span>or click to select files</span>
+                </label>
+            </div>
+
+            <div id="processing-indicator" class="hidden">
+                <div class="spinner"></div>
+                <p>Analyzing documents...</p>
+            </div>
+
+            <div id="results-container"></div>
+        </main>
+    </div>
+
+    <template id="result-card-template">
+        <div class="result-card">
+            <h2 class="filename"></h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="summary">Summary</button>
+                <button class="tab-button" data-tab="details">Page Details</button>
+                <button class="tab-button" data-tab="json">Raw JSON</button>
+            </div>
+            <div class="tab-content active" id="summary"></div>
+            <div class="tab-content" id="details"></div>
+            <div class="tab-content" id="json">
+                <pre class="json-output"></pre>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>

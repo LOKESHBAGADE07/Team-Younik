@@ -42,7 +42,7 @@ Running this web application is incredibly simple. No builds, no dependencies, n
 
 Clone the Repository:
 
-git clone [https://github.com/your-username/your-repository.git](https://github.com/your-username/your-repository.git)
+git clone [https://github.com/your-username/your-repository.git](https://github.com/LOKESHBAGADE07/Team-Younik)
 
 Open the HTML File:
 Navigate into the cloned folder and open the index.html file in any modern web browser (like Chrome, Firefox, or Edge).
